@@ -2,8 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	base-audit
-PORTVERSION=	0.1
-PORTREVISION=	1
+PORTVERSION=	0.2
 CATEGORIES=	security
 MASTER_SITES=	# none
 DISTFILES=	# none
@@ -19,7 +18,7 @@ NO_ARCH=	yes
 NO_BUILD=	yes
 NO_INSTALL=	yes
 
-SUB_FILES=	405.pkg-base-audit pkg-message
+SUB_FILES=	405.pkg-base-audit
 
 PERIODIC_SECURITY=	etc/periodic/security
 
