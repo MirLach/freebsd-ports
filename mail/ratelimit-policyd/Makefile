@@ -2,7 +2,7 @@
 # $FreeBSD$
 
 PORTNAME=	ratelimit-policyd
-PORTVERSION=	1.0.0
+PORTVERSION=	1.0.1
 CATEGORIES=	mail
 MASTER_SITES=	GH
 
@@ -17,6 +17,8 @@ GH_PROJECT=	ratelimit-policyd
 #GH_TAGNAME=	65154a2
 
 USES+=		perl5 shebangfix
+
+RUN_DEPENDS+=	p5-DBD-mysql>=0:databases/p5-DBD-mysql
 
 SHEBANG_FILES=	ratelimit-policyd.pl
 
