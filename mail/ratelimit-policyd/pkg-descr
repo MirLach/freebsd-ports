@@ -1,4 +1,4 @@
-A Sender rate limit policy daemon for Postfix writen in Perl.
-Customized to work with modern Perl version on FreeBSD.
+A Sender rate limit policy daemon for Postfix written in Perl.
+Customised to work with modern Perl version on FreeBSD.
 
 WWW: https://github.com/MirLach/ratelimit-policyd
