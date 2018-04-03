@@ -11,12 +11,12 @@ COMMENT=	Sender rate limit policy daemon for Postfix
 
 LICENSE=	NONE
 
+USES+=		perl5 shebangfix
+
 USE_GITHUB=	yes
 GH_ACCOUNT=	MirLach
 GH_PROJECT=	ratelimit-policyd
 #GH_TAGNAME=	65154a2
-
-USES+=		perl5 shebangfix
 
 RUN_DEPENDS+=	p5-DBD-mysql>=0:databases/p5-DBD-mysql
 
@@ -33,7 +33,8 @@ PLIST_FILES=	bin/ratelimit-policyd.pl \
 	etc/ratelimit-policyd.cfg.sample \
 	${PERIODIC_DAILY}/535.ratelimit-policyd
 
-PORTDATA=	mysql-schema.sql README.md
+PORTDATA=	mysql-schema.sql
+PORTDOCS=	README.md
 
 post-patch:
 	${REINPLACE_CMD} -e "s|/usr/local|${PREFIX}|g" ${WRKSRC}/rc.d/ratelimit-policyd
@@ -46,9 +47,14 @@ do-install:
 	${INSTALL_SCRIPT} ${WRKSRC}/rc.d/ratelimit-policyd ${STAGEDIR}${PREFIX}/etc/rc.d
 	${INSTALL_DATA} ${WRKSRC}/ratelimit-policyd.cfg \
 		${STAGEDIR}${PREFIX}/etc/ratelimit-policyd.cfg.sample
+
 	@${MKDIR} ${STAGEDIR}${DATADIR}
 	${INSTALL_DATA} ${WRKSRC}/mysql-schema.sql ${STAGEDIR}${DATADIR}
-	${INSTALL_DATA} ${WRKSRC}/README.md ${STAGEDIR}${DATADIR}
+
+	@${MKDIR} ${STAGEDIR}${DOCSDIR}
+.for i in ${PORTDOCS}
+	${INSTALL_MAN} ${WRKSRC}/${i} ${STAGEDIR}${DOCSDIR}/
+.endfor
 
 	@${MKDIR} ${STAGEDIR}${PREFIX}/${PERIODIC_DAILY}
 	${INSTALL_SCRIPT} ${WRKSRC}/periodic/daily/535.ratelimit-policyd \
