@@ -43,7 +43,7 @@ fi
 : ${security_status_baseaudit_quiet:=NO}
 : ${security_status_baseaudit_chroots=$pkg_chroots}
 : ${security_status_baseaudit_jails=$pkg_jails}
-: ${security_status_baseaudit_jails_ignore=""}
+: ${security_status_baseaudit_jails_ignore+=""}
 : ${security_status_baseaudit_expiry:=2}
 
 # Compute PKG_DBDIR from the config file.
@@ -171,18 +171,16 @@ audit_base_all() {
 
 	for j in $jails ; do
 		# ignore some jails
-		if [ -n "$security_status_baseaudit_jails_ignore" ]; then
-			# we iterate to get exact matches because we want substring matches
-			# foo should not match foo.bar
-			for ignore in $security_status_baseaudit_jails_ignore ; do
-				if [ "${j%|*}" == "$ignore" ]; then
-					echo
-					echo "ignoring jail: ${j%|*}"
-					# continue with the main loop
-					continue 2
-				fi
-			done
-		fi
+		# we iterate to get exact matches because we want substring matches
+		# foo should not match foo.bar
+		for ignore in ${security_status_baseaudit_jails_ignore} ; do
+			if [ "${j%|*}" = "${ignore}" ]; then
+				echo
+				echo "ignoring jail: ${j%|*}"
+				# continue with the main loop
+				continue 2
+			fi
+		done
 		echo
 		echo "jail: ${j%|*}"
 		audit_base "-j ${j%|*}" ${j##*|}
