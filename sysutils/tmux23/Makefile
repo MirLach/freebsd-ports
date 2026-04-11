@@ -1,31 +1,30 @@
-# Created by: Wen Heping <wenheping@gmail.com>
-# $FreeBSD: head/sysutils/tmux/Makefile 434427 2017-02-20 02:57:04Z jbeich $
-
-PORTNAME=	tmux23
-PORTVERSION=	2.3
+PORTNAME=	tmux
+DISTVERSION=	2.3
+PORTREVISION=	2
 CATEGORIES=	sysutils
 MASTER_SITES=	https://github.com/tmux/tmux/releases/download/${PORTVERSION}/
-DISTNAME=	tmux-${DISTVERSIONPREFIX}${DISTVERSION}${DISTVERSIONSUFFIX}
+PKGNAMESUFFIX=	23
 DISTFILES=	${DISTNAME}${EXTRACT_SUFX}
 
 MAINTAINER=	000.fbsd@quip.cz
-COMMENT=	Terminal Multiplexer, old version 2.3
+COMMENT=	Terminal Multiplexer (old stable version 2.3)
+WWW=		https://tmux.github.io/
 
 LICENSE=	ISCL
 LICENSE_FILE=	${WRKSRC}/COPYING
 
-USES=		pkgconfig ncurses
+CONFLICTS_INSTALL=	tmux
 
+USES=		cpe ncurses pkgconfig
+CPE_VENDOR=	${PORTNAME}_project
 USE_GITHUB=	nodefault
 GH_TUPLE=	imomaliev:tmux-bash-completion:ef56d3e:bash
-
-CONFLICTS_INSTALL=	tmux-[0-9]*
 
 GNU_CONFIGURE=	yes
 CONFIGURE_ARGS+=--sysconfdir=${PREFIX}/etc
 
 PLIST_FILES=	bin/tmux \
-		man/man1/tmux.1.gz \
+		share/man/man1/tmux.1.gz \
 		etc/bash_completion.d/tmux
 
 PORTDOCS=	CHANGES FAQ README TODO
@@ -52,7 +51,7 @@ post-configure-LIBEVENT_STATIC-on:
 
 do-install:
 	${INSTALL_PROGRAM} ${WRKSRC}/tmux ${STAGEDIR}${PREFIX}/bin
-	${INSTALL_MAN} ${WRKSRC}/tmux.1 ${STAGEDIR}${MANPREFIX}/man/man1
+	${INSTALL_MAN} ${WRKSRC}/tmux.1 ${STAGEDIR}${PREFIX}/share/man/man1
 	@${MKDIR} ${STAGEDIR}${PREFIX}/etc/bash_completion.d
 	${INSTALL_DATA} ${WRKSRC_bash}/completions/tmux ${STAGEDIR}${PREFIX}/etc/bash_completion.d/tmux
 

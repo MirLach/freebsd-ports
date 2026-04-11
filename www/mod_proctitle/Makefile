@@ -1,6 +1,3 @@
-# Created by: stas
-# $FreeBSD$
-
 PORTNAME=	mod_proctitle
 PORTVERSION=	0.4.1
 PORTREVISION=	1
@@ -9,14 +6,15 @@ PKGNAMEPREFIX=	${APACHE_PKGNAMEPREFIX}
 
 MAINTAINER=	000.fbsd@quip.cz
 COMMENT=	Set httpd process titles to reflect currently processed request
-
-USE_GITHUB=	yes
-GH_ACCOUNT=	MirLach
+WWW=		https://github.com/MirLach/mod_proctitle
 
 LICENSE=	BSD2CLAUSE
 
 GNU_CONFIGURE=	yes
-USES=		apache:2.2+ tar:bzip2 autoreconf libtool
+USES=		apache autoreconf libtool
+
+USE_GITHUB=	yes
+GH_ACCOUNT=	MirLach
 
 CFLAGS+=	-I${LOCALBASE}/include \
 		-I${LOCALBASE}/include/apr-1
